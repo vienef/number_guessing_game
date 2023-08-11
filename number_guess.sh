@@ -34,11 +34,11 @@ CHECK_ANSWER() {
   read ANSWER
   if [[ $ANSWER =~ ^[0-9]+$ ]]
   then
-    if [[ $1 < $ANSWER ]]
+    if [ "$1" -lt "$ANSWER" ]
     then
       echo "It's lower than that, guess again:"
       CHECK_ANSWER $1 $GUESS_COUNT
-    elif [[ $1 > $ANSWER ]]
+    elif [ "$1" -gt "$ANSWER" ]
     then
       echo "It's higher than that, guess again:"
       CHECK_ANSWER $1 $GUESS_COUNT
@@ -60,7 +60,7 @@ UPDATE_DATABASE() {
     UPDATED_BEST_GAME=$($PSQL "UPDATE games SET best_game = $2 WHERE username = '$1'")
   else
     UPDATED_GAMES_PLAYED=$($PSQL "UPDATE games SET games_played = $GAMES_PLAYED + 1 WHERE username = '$1'")
-    if [[ $2 < $BEST_GAME ]]
+    if [ "$2" -lt "$BEST_GAME" ]
     then
       UPDATED_BEST_GAME=$($PSQL "UPDATE games SET best_game = $2 WHERE username = '$1'")
     fi
